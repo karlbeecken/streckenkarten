@@ -23,20 +23,25 @@ app.get("/", (request: Request, response: Response) => {
   pool.query(
     "SELECT name, umap_map.id, slug, username, share_status FROM umap_map LEFT JOIN auth_user ON owner_id = auth_user.id WHERE share_status = 1 AND name ILIKE '%strecke%'",
     (err, res) => {
-      res.rows[
-        res.rows.findIndex((row) => row.username === "moritz")
-      ].username = "moritzschmidt_";
-      res.rows[res.rows.findIndex((row) => row.username === "karl")].username =
-        "KarlBeecken";
+      if (err) {
+        console.log(err.stack);
+      } else {
+        res.rows[
+          res.rows.findIndex((row) => row.username === "moritz")
+        ].username = "moritzschmidt_";
+        res.rows[
+          res.rows.findIndex((row) => row.username === "karl")
+        ].username = "KarlBeecken";
 
-      console.log(err ? err.stack : res.rows); // Hello World!
+        console.log(res.rows);
 
-      response.render("index", {
-        subject: "Streckenkarten | bahn.gay",
-        name: "bahn",
-        entries: res.rows,
-        link: "mailto:karl@beecken.berlin",
-      });
+        response.render("index", {
+          subject: "Streckenkarten | bahn.gay",
+          name: "bahn",
+          entries: res.rows,
+          link: "mailto:karl@beecken.berlin",
+        });
+      }
     }
   );
 });
