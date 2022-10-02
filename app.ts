@@ -46,6 +46,27 @@ app.get("/", (request: Request, response: Response) => {
   );
 });
 
+app.get("/u/:user", (request: Request, response: Response) => {
+  pool.query(
+    "SELECT name, umap_map.id, slug, username, share_status FROM umap_map LEFT JOIN auth_user ON owner_id = auth_user.id WHERE share_status = 1 AND name ILIKE '%strecke%' AND username = $1",
+    [request.params.user],
+    (err, res) => {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        if (res.rows.length === 0) {
+          response.status(404).send("404: no map with provided username found");
+        } else {
+          console.log(res.rows);
+          response.redirect(
+            `https://bahn.gay/m/${res.rows[res.rows.length - 1].id}`
+          );
+        }
+      }
+    }
+  );
+});
+
 app.listen(port || 3000, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
 });
