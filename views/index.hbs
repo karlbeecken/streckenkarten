@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <title>
+      {{subject}}
+    </title>
+  </head>
+  <body>
+    <div class="container mt-2">
+      <header>
+        <h2>Willkommen!</h2>
+        <p>Hier findest du alle Streckenkarten auf
+          <a href="https://bahn.gay">bahn.gay</a>.
+          <br />Um auf dieser Liste aufgeführt zu werden, muss deine Karte
+          öffentlich sichtbar sein und im Namen "strecke" beinhalten.
+        </p>
+      </header>
+      <section>
+        <div>
+          {{#each entries}}
+            <div class="row">
+              <div class="col-md-12">
+                <h3><a href="https://bahn.gay/m/{{id}}">{{name}}</a></h3>
+                <p>Twitter:
+                  <a
+                    href="https://twitter.com/{{username}}"
+                  >@{{username}}</a></p>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </section>
+      <footer>
+        <p><a href="{{link}}">Kontakt</a></p>
+      </footer>
+    </div>
+  </body>
+</html>
