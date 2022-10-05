@@ -8,6 +8,8 @@ dotenv.config();
 const app: Express = express();
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "static")));
+
 const port = process.env.PORT;
 const pool = new Pool({
   user: process.env.PGUSER,
